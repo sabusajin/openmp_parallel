@@ -82,7 +82,7 @@ void prefixsum(int *arr, long int n, int thrds) {
     }
     
     int sum = 0;
-    #pragma omp for schedule(dynamic, 1000)
+    #pragma omp for schedule(static)
     for (int i=0; i<n; i++) {
         sum += arr[i];
         arr[i] = sum;
