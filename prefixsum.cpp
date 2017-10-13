@@ -80,6 +80,7 @@ void prefixsum(int *arr, long int n, int thrds) {
             temp = new int[thrds+1];
             temp[0] = 0;
     }
+    
     int sum = 0;
     #pragma omp for schedule(dynamic, 1000)
     for (int i=0; i<n; i++) {
@@ -87,6 +88,7 @@ void prefixsum(int *arr, long int n, int thrds) {
         arr[i] = sum;
     }
     temp[thnum+1] = sum;
+
     #pragma omp barrier
     int offset = 0;
     for(int i=0; i<(thnum+1); i++) {
