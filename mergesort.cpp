@@ -178,4 +178,35 @@ void merge_sort(int *a, std::string sched, int granularity)
 
         }
       }
+      else if (sched.compare("guided")) {
+        if(granularity == -1){
+    	   for (int i=1; i<=n-1; i = 2*i)
+    	    {
+    		      #pragma omp parallel for schedule(guided)
+    		      for (int j=0; j<n-1; j += 2*i)
+    		      {
+                 int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+    			       int middle = j+i-1< n-1?j+i-1:n-1;
+
+    			       merge(a, j, middle, right);
+    		        }
+
+            }
+          }
+          else {
+            for (int i=1; i<=n-1; i = 2*i)
+       	    {
+       		      #pragma omp parallel for schedule(guided, granularity)
+       		      for (int j=0; j<n-1; j += 2*i)
+       		      {
+                    int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+       			       int middle = j+i-1< n-1?j+i-1:n-1;
+
+       			       merge(a, j, middle, right);
+       		        }
+
+               }
+
+          }
+        }
   }
