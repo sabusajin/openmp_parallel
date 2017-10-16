@@ -20,7 +20,7 @@ extern "C" {
 }
 #endif
 
-long n;
+unsigned long int n;
 void merge_sort(int *a, std::string sched, int granularity);
 void merge(int *arr, int left, int middle, int right);
 
@@ -49,7 +49,7 @@ int main (int argc, char* argv[]) {
   generateMergeSortData (arr, atoi(argv[1]));
 
   //write code here
-  n = atoi (argv[1]);
+  n = atol (argv[1]);
   int thrds = atoi(argv[2]);
   std::string sched = argv[3];
   int granularity = atoi(argv[4]);
