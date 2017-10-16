@@ -209,4 +209,8 @@ void merge_sort(int *a, std::string sched, int granularity)
 
           }
         }
+        else {
+          std::cout<<"Please use either static, guided, or dynamic!!!"<<std::endl;
+          exit(-1);
+        }
   }
