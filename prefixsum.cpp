@@ -20,8 +20,11 @@ extern "C" {
 }
 #endif
 
+
+
 void prefixsum(int *arr, long int n, int thrds);
 
+/*Main function*/
 
 int main (int argc, char* argv[]) {
 
@@ -68,6 +71,11 @@ int main (int argc, char* argv[]) {
   return 0;
 }
 
+/*Prefix sum function
+takes array pointer, n and number of threads
+finds prefix sum parallely
+Uses static scheduling policy*/
+
 void prefixsum(int *arr, long int n, int thrds) {
 
   int *temp;
@@ -80,7 +88,7 @@ void prefixsum(int *arr, long int n, int thrds) {
             temp = new int[thrds+1];
             temp[0] = 0;
     }
-    
+
     int sum = 0;
     #pragma omp for schedule(static)
     for (int i=0; i<n; i++) {

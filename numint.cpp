@@ -1,3 +1,6 @@
+/*Program to do Numerical integration parallely
+Sajin Sabu
+800943270*/
 #include <omp.h>
 #include <stdio.h>
 #include <iostream>
@@ -19,6 +22,10 @@ float f4(float x, int intensity);
 #ifdef __cplusplus
 }
 #endif
+
+/*integration function
+Parses the command line arguments for the scheduling policies and
+values of a,n,b, etc and calculates the value parallely*/
 
 float integrate(char* argv[]) {
   int functionid = atoi(argv[1]);
@@ -178,6 +185,8 @@ float integrate(char* argv[]) {
   }
   return result;
 }
+
+/*Main function*/
 
 int main(int argc, char* argv[]) {
 // forces openmp to create the threads beforehand

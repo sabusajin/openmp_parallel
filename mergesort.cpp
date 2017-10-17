@@ -22,8 +22,9 @@ extern "C" {
 
 unsigned long int n;
 void merge_sort(int *a, std::string sched, int granularity);
-void merge(int *arr, int left, int middle, int right);
+void merge(int *arr, unsigned long left, unsigned long middle, unsigned long right);
 
+/*Main function*/
 
 int main (int argc, char* argv[]) {
 
@@ -68,21 +69,23 @@ int main (int argc, char* argv[]) {
   return 0;
 }
 
-void merge(int *arr, int left, int middle, int right)
+/*Merge function- same as sequential merge*/
+
+void merge(int *arr, unsigned long left, unsigned long middle, unsigned long right)
 {
-	int n1 = middle - left + 1, n2 = right - middle;
+	unsigned long n1 = middle - left + 1, n2 = right - middle;
 	int L[n1], R[n2];
-	for (int i = 0; i < n1; i++)
+	for (unsigned long i = 0; i < n1; i++)
 	{
 		L[i] = arr[left + i];
 	}
-	for (int j = 0; j < n2; j++)
+	for (unsigned long j = 0; j < n2; j++)
 	{
 		R[j] = arr[middle + 1+ j];
 	}
 
 
-	int i = 0, j = 0, k = left;
+	unsigned long i = 0, j = 0, k = left;
 
 	// Merging 2 arrays of length n1 & n2
 	while (i < n1 && j < n2)
@@ -114,17 +117,21 @@ void merge(int *arr, int left, int middle, int right)
 	return;
 }
 
+/*Parallel implementation of merge function*/
+
 void merge_sort(int *a, std::string sched, int granularity)
 {
+
+  /*Checks for scheduling policy*/
   if (sched.compare("static")) {
     if(granularity == -1){
-	   for (int i=1; i<=n-1; i = 2*i)
+	   for (unsigned long i=1; i<=n-1; i = 2*i)
 	    {
 		      #pragma omp parallel for schedule(static)
-		      for (int j=0; j<n-1; j += 2*i)
+		      for (unsigned long j=0; j<n-1; j += 2*i)
 		      {
-             int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
-			       int middle = j+i-1< n-1?j+i-1:n-1;
+             unsigned long right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+			       unsigned long middle = j+i-1< n-1?j+i-1:n-1;
 
 			       merge(a, j, middle, right);
 		        }
@@ -132,13 +139,13 @@ void merge_sort(int *a, std::string sched, int granularity)
         }
       }
       else {
-        for (int i=1; i<=n-1; i = 2*i)
+        for (unsigned long i=1; i<=n-1; i = 2*i)
    	    {
    		      #pragma omp parallel for schedule(static, granularity)
-   		      for (int j=0; j<n-1; j += 2*i)
+   		      for (unsigned long j=0; j<n-1; j += 2*i)
    		      {
-                int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
-   			       int middle = j+i-1< n-1?j+i-1:n-1;
+                unsigned long right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+   			       unsigned long middle = j+i-1< n-1?j+i-1:n-1;
 
    			       merge(a, j, middle, right);
    		        }
@@ -149,13 +156,13 @@ void merge_sort(int *a, std::string sched, int granularity)
     }
     else if (sched.compare("dynamic")) {
       if(granularity == -1){
-  	   for (int i=1; i<=n-1; i = 2*i)
+  	   for (unsigned long i=1; i<=n-1; i = 2*i)
   	    {
   		      #pragma omp parallel for schedule(dynamic)
-  		      for (int j=0; j<n-1; j += 2*i)
+  		      for (unsigned long j=0; j<n-1; j += 2*i)
   		      {
-               int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
-  			       int middle = j+i-1< n-1?j+i-1:n-1;
+               unsigned long right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+  			       unsigned long middle = j+i-1< n-1?j+i-1:n-1;
 
   			       merge(a, j, middle, right);
   		        }
@@ -163,15 +170,15 @@ void merge_sort(int *a, std::string sched, int granularity)
           }
         }
         else {
-          for (int i=1; i<=n-1; i = 2*i)
+          for (unsigned long i=1; i<=n-1; i = 2*i)
      	    {
      		      #pragma omp parallel for schedule(dynamic, granularity)
-     		      for (int j=0; j<n-1; j += 2*i)
+     		      for (unsigned long j=0; j<n-1; j += 2*i)
      		      {
-                  int right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
-     			       int middle = j+i-1< n-1?j+i-1:n-1;
+                  unsigned long right = j+(2*i)-1 < n-1? j+(2*i)-1:n-1;
+     			        unsigned long middle = j+i-1< n-1?j+i-1:n-1;
 
-     			       merge(a, j, middle, right);
+     			        merge(a, j, middle, right);
      		        }
 
              }

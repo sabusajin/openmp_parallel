@@ -1,3 +1,6 @@
+/*reduce
+Sajin Sabu
+800943270*/
 #include <omp.h>
 #include <stdio.h>
 #include <iostream>
@@ -19,6 +22,9 @@ extern "C" {
 #endif
 void reduce (int *arr, int argc, char* argv[]);
 
+
+/*Main function
+calls reduce and calculates time*/
 
 int main (int argc, char* argv[]) {
 
@@ -52,6 +58,8 @@ int main (int argc, char* argv[]) {
   delete[] arr;
   return 0;
 }
+
+/*Function to do parallel reduction*/
 void reduce (int *arr, int argc, char* argv[]) {
   int n = atoi(argv[1]);
   int thrds = atoi(argv[2]);
@@ -60,6 +68,8 @@ void reduce (int *arr, int argc, char* argv[]) {
   int sum = 0;
 
   omp_set_num_threads(thrds);
+
+  /*Check for command line parameters for the scheduling policy*/
 
   if (sched.compare("static")==0) {
     if (granularity == -1) {
